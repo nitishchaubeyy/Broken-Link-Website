@@ -13,12 +13,14 @@ export default function LineChart({ data, withTooltip = false }: LineProps) {
     xAxisKey,
     ...lineValues[index].values,
   }));
+
   const seriesNames = Object.keys(lineValues[0].values);
   const series = seriesNames.map((name, i) => ({
     name,
     color: CHART_COLORS[i % CHART_COLORS.length],
     curveType: lineValues[0].curveType ?? ('linear' satisfies CurveType),
   }));
+
   return (
     <MantineLineChart
       h={isMobileView ? chartStyles.mobileView : chartStyles.desktopView}
@@ -30,6 +32,11 @@ export default function LineChart({ data, withTooltip = false }: LineProps) {
       xAxisProps={chartStyles.xAxisProps}
       yAxisProps={chartStyles.yAxisProps}
       withTooltip={withTooltip}
+      lineProps={{
+        isAnimationActive: true,
+        animationDuration: 900,
+        animationEasing: 'ease-in-out',
+      }}
     />
   );
 }
