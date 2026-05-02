@@ -5,6 +5,8 @@ import { CurveType, LineProps } from '../chart.types';
 import { CHART_COLORS } from '../data';
 import { chartStyles } from './styles';
 
+const ANIMATION_DURATION = 900;
+
 export default function LineChart({ data, withTooltip = false }: LineProps) {
   const isMobileView = useMediaQuery(`(max-width: ${theme.breakpoints.lg})`);
   const { xAxisKeys, lineValues } = data;
@@ -34,7 +36,7 @@ export default function LineChart({ data, withTooltip = false }: LineProps) {
       withTooltip={withTooltip}
       lineProps={{
         isAnimationActive: true,
-        animationDuration: 900,
+        animationDuration: ANIMATION_DURATION,
         animationEasing: 'ease-in-out',
       }}
     />

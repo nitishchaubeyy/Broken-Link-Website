@@ -5,6 +5,9 @@ import { DonutProps } from '../chart.types';
 import { CHART_COLORS } from '../data';
 import { chartStyles } from './styles';
 
+const ANIMATION_DURATION = 900;
+const ANIMATION_BEGIN = 100;
+
 export default function DonutChart({ data, withToolTip = false }: DonutProps) {
   const graphData = data.map((item, i) => ({
     ...item,
@@ -24,8 +27,8 @@ export default function DonutChart({ data, withToolTip = false }: DonutProps) {
         strokeColor={chartStyles.strokeColor}
         pieProps={{
           isAnimationActive: true,
-          animationDuration: 900,
-          animationBegin: 100,
+          animationDuration: ANIMATION_DURATION,
+          animationBegin: ANIMATION_BEGIN,
           animationEasing: 'ease-out',
         }}
       />
