@@ -4,6 +4,7 @@ import { theme } from '@/theme';
 import { CurveType, LineProps } from '../chart.types';
 import { CHART_COLORS } from '../data';
 import { chartStyles } from './styles';
+import { CHART_ANIMATION_DURATION } from '../constants';
 
 export default function LineChart({ data, withTooltip = false }: LineProps) {
   const isMobileView = useMediaQuery(`(max-width: ${theme.breakpoints.lg})`);
@@ -13,12 +14,14 @@ export default function LineChart({ data, withTooltip = false }: LineProps) {
     xAxisKey,
     ...lineValues[index].values,
   }));
+
   const seriesNames = Object.keys(lineValues[0].values);
   const series = seriesNames.map((name, i) => ({
     name,
     color: CHART_COLORS[i % CHART_COLORS.length],
     curveType: lineValues[0].curveType ?? ('linear' satisfies CurveType),
   }));
+
   return (
     <MantineLineChart
       h={isMobileView ? chartStyles.mobileView : chartStyles.desktopView}
@@ -30,6 +33,11 @@ export default function LineChart({ data, withTooltip = false }: LineProps) {
       xAxisProps={chartStyles.xAxisProps}
       yAxisProps={chartStyles.yAxisProps}
       withTooltip={withTooltip}
+      lineProps={{
+        isAnimationActive: true,
+        animationDuration: CHART_ANIMATION_DURATION,
+        animationEasing: 'ease-in-out',
+      }}
     />
   );
 }

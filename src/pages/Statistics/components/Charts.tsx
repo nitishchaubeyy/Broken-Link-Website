@@ -7,7 +7,6 @@ import { Typography } from '@/components/UI/Typography/Typography';
 import { theme } from '@/theme';
 import { graphsStyles } from './styles';
 
-// TODO - replace hardcoded data with data from the server
 const donutData = [
   { name: 'Chrome', value: 68 },
   { name: 'Firefox', value: 10 },
@@ -30,6 +29,7 @@ const lineData = {
 export default function Charts() {
   const { t } = useTranslation();
   const isMobileView = useMediaQuery(`(max-width: ${theme.breakpoints.lg})`);
+
   return (
     <div style={graphsStyles.containerDisplay(isMobileView)}>
       <Card style={graphsStyles.cardStyles(isMobileView)}>
