@@ -4,9 +4,7 @@ import { Typography } from '@/components/UI/Typography/Typography';
 import { DonutProps } from '../chart.types';
 import { CHART_COLORS } from '../data';
 import { chartStyles } from './styles';
-
-const ANIMATION_DURATION = 900;
-const ANIMATION_BEGIN = 100;
+import { CHART_ANIMATION_DURATION, DONUT_ANIMATION_BEGIN } from '../constants';
 
 export default function DonutChart({ data, withToolTip = false }: DonutProps) {
   const graphData = data.map((item, i) => ({
@@ -27,8 +25,8 @@ export default function DonutChart({ data, withToolTip = false }: DonutProps) {
         strokeColor={chartStyles.strokeColor}
         pieProps={{
           isAnimationActive: true,
-          animationDuration: ANIMATION_DURATION,
-          animationBegin: ANIMATION_BEGIN,
+          animationDuration: CHART_ANIMATION_DURATION,
+          animationBegin: DONUT_ANIMATION_BEGIN,
           animationEasing: 'ease-out',
         }}
       />
