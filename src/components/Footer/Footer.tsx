@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 import { IconCode, IconHeart, IconStar } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { Box, Container, SimpleGrid, Text } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigationLinks } from '@/components/Hooks/useNavigationLinks';
 import { theme } from '@/theme';
+import { API_ENDPOINTS } from '@/constants/api.consts';
 import { useIsDark } from '../Hooks/useIsDark';
 import { LinkButton, LinkTarget } from '../UI/Button/LinkButton';
 import { Divider } from '../UI/Divider/Divider';
@@ -19,20 +20,19 @@ export default function Footer() {
   const isMobileView = width < 1024;
   const isDark = useIsDark();
 
-  const [starCount, setStarCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    fetch('https://api.github.com/repos/Deadlink-Hunter/Broken-Link-Website')
-      .then((res) => res.json())
-      .then((data) => {
-        if (typeof data.stargazers_count === 'number') {
-          setStarCount(data.stargazers_count);
-        }
-      })
-      .catch((error) => {
-        console.error('Failed to fetch GitHub stars:', error);
-      });
-  }, []);
+  const { data: starCount } = useQuery({
+    queryKey: ['github-stars'],
+    queryFn: async () => {
+      const response = await fetch(API_ENDPOINTS.GITHUB_REPO);
+      if (!response.ok) {
+        throw new Error('Failed to fetch stars');
+      }
+      const data = await response.json();
+      return data.stargazers_count as number;
+    },
+    staleTime: 1000 * 60 * 5, 
+    retry: false, 
+  });
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function Footer() {
               }
               variant='primary'
             >
-              {starCount !== null ? `${t('footer.gitBtnTxt')} | ${starCount}` : t('footer.gitBtnTxt')}
+              {starCount !== undefined ? `${t('footer.gitBtnTxt')} | ${starCount}` : t('footer.gitBtnTxt')}
             </LinkButton>
           </Box>
 
