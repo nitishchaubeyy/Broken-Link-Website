@@ -1,8 +1,11 @@
 import { IconCode, IconHeart, IconStar } from '@tabler/icons-react';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Box, Container, SimpleGrid, Text } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useNavigationLinks } from '@/components/Hooks/useNavigationLinks';
+import { GITHUB_QUERY_KEY, GITHUB_STALE_TIME } from '@/constants/api.consts';
+import { githubService } from '@/services/Github/githubService';
 import { theme } from '@/theme';
 import { useIsDark } from '../Hooks/useIsDark';
 import { LinkButton, LinkTarget } from '../UI/Button/LinkButton';
@@ -17,6 +20,13 @@ export default function Footer() {
   const { width } = useViewportSize();
   const isMobileView = width < 1024;
   const isDark = useIsDark();
+
+  const { data: starCount } = useQuery({
+    queryKey: [GITHUB_QUERY_KEY],
+    queryFn: githubService.fetchGithubStars,
+    staleTime: GITHUB_STALE_TIME,
+    retry: false,
+  });
 
   return (
     <>
@@ -47,7 +57,7 @@ export default function Footer() {
               }
               variant='primary'
             >
-              {t('footer.gitBtnTxt')}
+              {`${t('footer.gitBtnTxt')}${starCount != null ? ` | ${starCount}` : ''}`}
             </LinkButton>
           </Box>
 
