@@ -5,7 +5,7 @@ import { Box, Container, SimpleGrid, Text } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { useNavigationLinks } from '@/components/Hooks/useNavigationLinks';
 import { GITHUB_QUERY_KEY, GITHUB_STALE_TIME } from '@/constants/api.consts';
-import { fetchGithubStars } from '@/services/Github/githubService';
+import { githubService } from '@/services/Github/githubService';
 import { theme } from '@/theme';
 import { useIsDark } from '../Hooks/useIsDark';
 import { LinkButton, LinkTarget } from '../UI/Button/LinkButton';
@@ -23,7 +23,7 @@ export default function Footer() {
 
   const { data: starCount } = useQuery({
     queryKey: [GITHUB_QUERY_KEY],
-    queryFn: fetchGithubStars,
+    queryFn: githubService.fetchGithubStars,
     staleTime: GITHUB_STALE_TIME,
     retry: false,
   });
