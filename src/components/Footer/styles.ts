@@ -24,9 +24,21 @@ export const footerStyles = {
     color: isDark ? theme.white : theme.black,
   }),
 
-  linkBoxWrapper: {
+  topGrid: (isMobileView: boolean): CSSProperties => ({
+    display: 'grid',
+    gridTemplateColumns: isMobileView ? '1fr' : 'repeat(3, 1fr)',
+    gap: theme.spacing.xl,
     paddingBottom: '3rem',
-  },
+  }),
+
+  bottomGrid: (isMobileView: boolean): CSSProperties => ({
+    display: 'grid',
+    gridTemplateColumns: isMobileView ? '1fr' : 'repeat(2, 1fr)',
+    gap: theme.spacing.xl,
+    paddingTop: '1rem',
+    paddingBottom: '4rem',
+    alignItems: 'center',
+  }),
 
   openSrcTxt: (isMobileView: boolean, isDark: boolean): CSSProperties => ({
     display: 'flex',
@@ -49,10 +61,4 @@ export const footerStyles = {
   },
 
   iconSize: 16,
-  topGridColLayout: { base: 1, sm: 1, md: 3 },
-  bottomGridColLayout: { base: 1, sm: 2 },
-  bottomGrid: {
-    paddingTop: '1rem',
-    paddingBottom: '4rem',
-  },
 };

@@ -1,7 +1,7 @@
 import { IconCode, IconHeart, IconStar } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Box, Container, SimpleGrid, Text } from '@mantine/core';
+import { Box, Container, Text } from '@mantine/core'; 
 import { useViewportSize } from '@mantine/hooks';
 import { useNavigationLinks } from '@/components/Hooks/useNavigationLinks';
 import { GITHUB_QUERY_KEY, GITHUB_STALE_TIME } from '@/constants/api.consts';
@@ -32,12 +32,8 @@ export default function Footer() {
     <>
       <Divider />
       <Container style={footerStyles.container}>
-        {/* TODO: Replace mantine grid with styling from styles.ts or create a new grid component thats based on simple grid */}
-        <SimpleGrid
-          spacing={theme.spacing.xl}
-          cols={footerStyles.topGridColLayout}
-          style={footerStyles.linkBoxWrapper}
-        >
+        {/* TODO Resolved: Replaced mantine grid with styling from styles.ts */}
+        <div style={footerStyles.topGrid(isMobileView)}>
           <Box>
             <Text
               inherit
@@ -79,13 +75,13 @@ export default function Footer() {
               />
             ))}
           </Box>
-        </SimpleGrid>
+        </div>
       </Container>
 
       <Divider />
 
       <Container style={footerStyles.container}>
-        <SimpleGrid style={footerStyles.bottomGrid} cols={footerStyles.bottomGridColLayout}>
+        <div style={footerStyles.bottomGrid(isMobileView)}>
           <Typography style={footerStyles.openSrcTxt(isMobileView, isDark)}>
             <IconCode size={footerStyles.iconSize} /> {t('footer.madeWith')}
             <IconHeart color={theme.colors.red[8]} size={footerStyles.iconSize} />
@@ -94,7 +90,7 @@ export default function Footer() {
           <Typography style={footerStyles.rightsTxt(isMobileView, isDark)}>
             {t('footer.rights')}
           </Typography>
-        </SimpleGrid>
+        </div>
       </Container>
     </>
   );
