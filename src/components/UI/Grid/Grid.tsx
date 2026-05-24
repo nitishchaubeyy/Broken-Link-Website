@@ -1,10 +1,11 @@
-import { CSSProperties, ReactNode } from 'react';
-import { useViewportSize } from '@mantine/hooks';
+import { ReactNode, CSSProperties } from 'react';
+import { useMediaQuery } from '@mantine/hooks';
+import { gridStyles } from './styles';
 
 interface GridProps {
   children: ReactNode;
-  cols?: number; 
-  mobileCols?: number; 
+  cols?: number;
+  mobileCols?: number;
   spacing?: string | number;
   style?: CSSProperties;
 }
@@ -16,15 +17,11 @@ export const Grid = ({
   spacing = '1rem',
   style,
 }: GridProps) => {
-  const { width } = useViewportSize();
-  const isMobileView = width < 1024;
+  const isMobileView = useMediaQuery('(max-width: 1024px)') || false;
 
-  const gridStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${isMobileView ? mobileCols : cols}, 1fr)`,
-    gap: spacing,
-    ...style,
-  };
-
-  return <div style={gridStyle}>{children}</div>;
+  return (
+    <div style={{ ...gridStyles.container(cols, mobileCols, isMobileView, spacing), ...style }}>
+      {children}
+    </div>
+  );
 };
