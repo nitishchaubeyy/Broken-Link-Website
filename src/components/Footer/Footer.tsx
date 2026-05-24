@@ -12,6 +12,7 @@ import { LinkButton, LinkTarget } from '../UI/Button/LinkButton';
 import { Divider } from '../UI/Divider/Divider';
 import { Link } from '../UI/Link/Link';
 import { Typography } from '../UI/Typography/Typography';
+import { Grid } from '../UI/Grid/Grid'; 
 import { footerStyles } from './styles';
 
 export default function Footer() {
@@ -32,8 +33,12 @@ export default function Footer() {
     <>
       <Divider />
       <Container style={footerStyles.container}>
-        {/* TODO Resolved: Replaced mantine grid with styling from styles.ts */}
-        <div style={footerStyles.topGrid(isMobileView)}>
+        <Grid
+          spacing={theme.spacing.xl}
+          cols={3}
+          mobileCols={1}
+          style={footerStyles.linkBoxWrapper}
+        >
           <Box>
             <Text
               inherit
@@ -75,13 +80,18 @@ export default function Footer() {
               />
             ))}
           </Box>
-        </div>
+        </Grid>
       </Container>
 
       <Divider />
 
       <Container style={footerStyles.container}>
-        <div style={footerStyles.bottomGrid(isMobileView)}>
+        <Grid
+          spacing={theme.spacing.xl}
+          cols={2}
+          mobileCols={1}
+          style={footerStyles.bottomGrid}
+        >
           <Typography style={footerStyles.openSrcTxt(isMobileView, isDark)}>
             <IconCode size={footerStyles.iconSize} /> {t('footer.madeWith')}
             <IconHeart color={theme.colors.red[8]} size={footerStyles.iconSize} />
@@ -90,7 +100,7 @@ export default function Footer() {
           <Typography style={footerStyles.rightsTxt(isMobileView, isDark)}>
             {t('footer.rights')}
           </Typography>
-        </div>
+        </Grid>
       </Container>
     </>
   );
